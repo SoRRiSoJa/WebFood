@@ -9,15 +9,25 @@ using Microsoft.Extensions.Configuration;
 
 namespace WebFood.Data
 {
+    /// <summary>
+    /// Implementação da classe e contexto
+    /// </summary>
     public class ContextDB : IDapper
     {
         private readonly IConfiguration _config;
         private string Connectionstring = "DBWebFood";
 
+        /// <summary>
+        /// Metodo contrutor
+        /// </summary>
+        /// <param name="config"></param>
         public ContextDB(IConfiguration config)
         {
             _config = config;
         }
+        /// <summary>
+        /// Metodo dispose
+        /// </summary>
         public void Dispose()
         {
 
@@ -39,12 +49,22 @@ namespace WebFood.Data
             using IDbConnection db = new SqlConnection(_config.GetConnectionString(Connectionstring));
             return db.Query<T>(sp, parms, commandType: commandType).ToList();
         }
-
+        /// <summary>
+        /// Retorna uma nova conexão com o banco de dados
+        /// </summary>
+        /// <returns></returns>
         public DbConnection GetDbconnection()
         {
             return new SqlConnection(_config.GetConnectionString(Connectionstring));
         }
-
+        /// <summary>
+        /// Insere um novo registro em uma tabela
+        /// </summary>
+        /// <typeparam name="T"></typeparam>
+        /// <param name="sp"></param>
+        /// <param name="parms"></param>
+        /// <param name="commandType"></param>
+        /// <returns></returns>
         public T Insert<T>(string sp, DynamicParameters parms, CommandType commandType = CommandType.StoredProcedure)
         {
             T result;
@@ -59,11 +79,11 @@ namespace WebFood.Data
                 {
                     result = db.Query<T>(sp, parms, commandType: commandType, transaction: tran).FirstOrDefault();
                     tran.Commit();
+                    return result;
                 }
                 catch (Exception ex)
                 {
                     tran.Rollback();
-                    throw ex;
                 }
             }
             catch (Exception ex)
@@ -75,10 +95,16 @@ namespace WebFood.Data
                 if (db.State == ConnectionState.Open)
                     db.Close();
             }
-
-            return result;
+            return default;
         }
-
+        /// <summary>
+        /// atualiza um registro em uma tabelas
+        /// </summary>
+        /// <typeparam name="T"></typeparam>
+        /// <param name="sp"></param>
+        /// <param name="parms"></param>
+        /// <param name="commandType"></param>
+        /// <returns></returns>
         public T Update<T>(string sp, DynamicParameters parms, CommandType commandType = CommandType.StoredProcedure)
         {
             T result;
@@ -93,11 +119,11 @@ namespace WebFood.Data
                 {
                     result = db.Query<T>(sp, parms, commandType: commandType, transaction: tran).FirstOrDefault();
                     tran.Commit();
+                    return result;
                 }
-                catch (Exception ex)
+                catch (Exception)
                 {
                     tran.Rollback();
-                    throw ex;
                 }
             }
             catch (Exception ex)
@@ -109,8 +135,8 @@ namespace WebFood.Data
                 if (db.State == ConnectionState.Open)
                     db.Close();
             }
-
-            return result;
+            return default;
+            
         }
     }
 }
