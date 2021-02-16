@@ -9,8 +9,15 @@ using System.Threading.Tasks;
 
 namespace WebFood
 {
+    /// <summary>
+    /// Classe inicial
+    /// </summary>
     public class Program
     {
+        /// <summary>
+        /// Metodo principal
+        /// </summary>
+        /// <param name="args"></param>
         public static void Main(string[] args)
         {
             CreateHostBuilder(args).Build().Run();

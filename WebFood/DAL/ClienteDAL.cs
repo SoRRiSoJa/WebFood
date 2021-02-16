@@ -41,10 +41,10 @@ namespace WebFood.DAL
         {
             var result = await Task.FromResult(_ContextDB.Get<List<Cliente>>($@"
             SELECT C.*,T.*,E.* FROM Cliente C 
-            INNER JOIN ClienteTelefone CT ON C.Id=CT.ClienteId
-            INNER JOIN ClienteEndereco CE ON C.Id=CE.ClienteId
-            INNER JOIN Telefone T ON CT.TelefoneId=T.Id
-            INNER JOIN Endereco E ON E.ID=CE.EnderecoId
+            LEFT JOIN ClienteTelefone CT ON C.Id=CT.ClienteId
+            LEFT JOIN ClienteEndereco CE ON C.Id=CE.ClienteId
+            LEFT JOIN Telefone T ON CT.TelefoneId=T.Id
+            LEFT JOIN Endereco E ON E.ID=CE.EnderecoId
             WHERE C.Id='{id}'", null, commandType: CommandType.Text));
             return result;
         }

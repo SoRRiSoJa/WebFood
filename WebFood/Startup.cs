@@ -13,6 +13,9 @@ namespace WebFood
     using WebFood.DAL;
     using WebFood.DAL.Abstractions;
     using WebFood.Data;
+    using WebFood.Service;
+    using WebFood.Service.Abstractions;
+
     /// <summary>
     /// Classe de setup do sistema
     /// </summary>
@@ -50,6 +53,7 @@ namespace WebFood
             //Register dapper in scope    
             services.AddScoped<IDapper, ContextDB>();
             services.AddScoped<IClienteDAL,ClienteDAL>();
+            services.AddScoped<IClienteService, ClienteService>();
         }
 
         /// <summary>
