@@ -33,6 +33,9 @@ namespace WebFood.DTO.Cliente
         /// Telefones
         /// </summary>
         public IEnumerable<TelefoneDTO> Telefone { get; set; }
+        /// <summary>
+        /// Status do cliente
+        /// </summary>
         public bool Status { get; set; }
     }
 }
