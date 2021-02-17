@@ -4,6 +4,7 @@ using System.Threading.Tasks;
 
 namespace WebFood.DAL
 {
+    using Dapper;
     using System.Data;
     using WebFood.DAL.Abstractions;
     using WebFood.Data;
@@ -39,15 +40,26 @@ namespace WebFood.DAL
         /// <returns></returns>
         public async Task<IEnumerable<Cliente>> GetById(Guid id)
         {
-            var result = await Task.FromResult(_ContextDB.Get<List<Cliente>>($@"
-            SELECT C.*,T.*,E.* FROM Cliente C 
-            LEFT JOIN ClienteTelefone CT ON C.Id=CT.ClienteId
-            LEFT JOIN ClienteEndereco CE ON C.Id=CE.ClienteId
-            LEFT JOIN Telefone T ON CT.TelefoneId=T.Id
-            LEFT JOIN Endereco E ON E.ID=CE.EnderecoId
-            WHERE C.Id='{id}'", null, commandType: CommandType.Text));
-            return result;
+            var tt = new Guid("77C1FD6D-7476-4F56-B969-20176E1D5934");
+            using (var db = _ContextDB.GetDbconnection())
+            {
+
+                await db.OpenAsync();
+                var query = $@"
+                SELECT C.*,T.*,E.* FROM Cliente C 
+                LEFT JOIN ClienteTelefone CT ON C.Id=CT.ClienteId
+                LEFT JOIN ClienteEndereco CE ON C.Id=CE.ClienteId
+                LEFT JOIN Telefone T ON CT.TelefoneId=T.Id
+                LEFT JOIN Endereco E ON E.ID=CE.EnderecoId
+                WHERE C.Id='{tt}'";
+                var clientes = await db.QueryAsync<Cliente>(query);
+                
+                return clientes;
+            }
         }
+                
+            
+        
         /// <summary>
         /// Insere um novo registro de cliente
         /// </summary>

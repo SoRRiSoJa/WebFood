@@ -50,8 +50,8 @@ namespace WebFood.Controllers
         [HttpGet(nameof(GetById))]
         public async Task<IEnumerable<Cliente>> GetById(Guid Id)
         {
-            var t = new Guid("77C1FD6D-7476-4F56-B969-20176E1D5934");
-            var tt= await ClienteService.GetById(t);
+            
+            var tt= await ClienteService.GetById(Id);
             return tt;
         }
 

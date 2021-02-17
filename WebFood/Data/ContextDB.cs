@@ -55,7 +55,8 @@ namespace WebFood.Data
         /// <returns></returns>
         public DbConnection GetDbconnection()
         {
-            return new SqlConnection(_config.GetConnectionString(Connectionstring));
+            var conn= new SqlConnection(_config.GetConnectionString(Connectionstring));
+            return conn;
         }
         /// <summary>
         /// Insere um novo registro em uma tabela
