@@ -6,6 +6,8 @@ namespace WebFood.DAL
 {
     using Dapper;
     using Microsoft.AspNetCore.Mvc;
+    using System.Linq;
+    using System.Text;
     using WebFood.DAL.Abstractions;
     using WebFood.Data;
     using WebFood.Model.Cliente;
@@ -38,7 +40,7 @@ namespace WebFood.DAL
         /// <param name="id">Id do cliente</param>
         /// <returns></returns>
 
-        public async Task<IEnumerable<Cliente>> GetById(Guid? id)
+        public async Task<Cliente> GetById(Guid? id)
         {
             try
             {
@@ -46,7 +48,38 @@ namespace WebFood.DAL
                 {
 
                     await db.OpenAsync();
-                    var clientes = await db.QueryAsync<Cliente>($@"
+
+                    StringBuilder sql = new StringBuilder();
+                    sql.Append("SELECT C.*,T.*,E.* FROM Cliente C ");
+                    sql.Append("LEFT JOIN ClienteTelefone CT ON C.Id=CT.ClienteId ");
+                    sql.Append("LEFT JOIN ClienteEndereco CE ON C.Id=CE.ClienteId ");
+                    sql.Append("LEFT JOIN Telefone T ON CT.TelefoneId=T.Id ");
+                    sql.Append("LEFT JOIN Endereco E ON E.ID=CE.EnderecoId ");
+                    sql.Append("WHERE C.Id='");
+                    sql.Append(id);
+                    sql.Append('\''); 
+                    List <Cliente> datas = new List<Cliente>();
+                    db.Query<Cliente, Telefone, Cliente>(sql.ToString(), (c, t) =>
+                    {
+                        if (c.Telefone == null) c.Telefone = new List<Telefone>();
+                         c.Telefone.Add(t);
+                        var r = datas.FirstOrDefault(x => x.Id == t.Id);
+                        if (r != null)
+                        {
+                            r.Telefone.Add(t);
+                        }
+                        else
+                        {
+                            datas.Add(c);
+                        }
+                        return c;
+                    }, splitOn: "Id, Id");
+                    
+
+
+
+
+                    var clientes = await db.QueryFirstOrDefaultAsync<Cliente>($@"
                         SELECT C.*,T.*,E.* FROM Cliente C 
                         LEFT JOIN ClienteTelefone CT ON C.Id=CT.ClienteId
                         LEFT JOIN ClienteEndereco CE ON C.Id=CE.ClienteId

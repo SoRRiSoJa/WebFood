@@ -28,7 +28,7 @@ namespace WebFood.Service
         /// </summary>
         /// <param name="Id"></param>
         /// <returns></returns>
-        public async Task<IEnumerable<Cliente>> GetById(Guid? Id)
+        public async Task<Cliente> GetById(Guid? Id)
         {
             return await ClienteDAL.GetById(Id);
         }

@@ -20,7 +20,7 @@ namespace WebFood.DAL.Abstractions
         /// </summary>
         /// <param name="id"></param>
         /// <returns></returns>
-        Task<IEnumerable<T>> GetById(Guid? id);
+        Task<T> GetById(Guid? id);
         /// <summary>
         /// Inserir novo registro na base
         /// </summary>

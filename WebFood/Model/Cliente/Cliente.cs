@@ -8,6 +8,7 @@ namespace WebFood.Model.Cliente
     /// </summary>
     public class Cliente
     {
+        
         /// <summary>
         /// Id de identificação do cliente
         /// </summary>
@@ -31,11 +32,15 @@ namespace WebFood.Model.Cliente
         /// <summary>
         /// Endereços
         /// </summary>
-        public IEnumerable<Endereco> Endereco { get; set; }
+        public ICollection<Endereco> Endereco { get; set; }
         /// <summary>
         /// Telefones
         /// </summary>
-        public IEnumerable<Telefone> Telefone { get; set; }
+        public ICollection<Telefone> Telefone { get; set; }
         public bool Status { get; set; }
+        public Cliente()
+        {
+            
+        }
     }
 }

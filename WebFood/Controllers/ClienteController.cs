@@ -33,9 +33,9 @@ namespace WebFood.Controllers
         /// </summary>
         /// <returns>IEnumerable<Cliente></Cliente></returns>
         [HttpGet]
-        public async Task<IEnumerable<Cliente>> ListAll()
+        public async Task<IActionResult> ListAll()
         {
-            return await ClienteService.ListAll();
+            return Ok(await ClienteService.ListAll());
         }
 
         /// <summary>
@@ -45,13 +45,19 @@ namespace WebFood.Controllers
         /// <returns></returns>
 
         [HttpGet("GetById/{Id}")]
-        public async Task<IEnumerable<Cliente>> GetById(Guid? Id)
+        public async Task<IActionResult> GetById(Guid? Id)
         {
             if (Id is null)
                 throw new ArgumentNullException(nameof(Id));
-
-            var tt= await ClienteService.GetById(Id);
-            return tt;
+            try
+            {
+                var data = await ClienteService.GetById(Id);
+                return Ok(data);
+            }
+            catch (Exception)
+            {
+                return new StatusCodeResult(500);
+            }
         }
 
 

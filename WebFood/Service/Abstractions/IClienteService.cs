@@ -1,6 +1,5 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.Linq;
 using System.Threading.Tasks;
 using WebFood.Model.Cliente;
 
@@ -22,6 +21,6 @@ namespace WebFood.Service.Abstractions
         /// </summary>
         /// <param name="Id"></param>
         /// <returns></returns>
-        Task<IEnumerable<Cliente>> GetById(Guid? Id);
+        Task<Cliente> GetById(Guid? Id);
     }
 }
