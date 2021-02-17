@@ -45,14 +45,13 @@ namespace WebFood.DAL
             {
 
                 await db.OpenAsync();
-                var query = $@"
+                var clientes = await db.QueryAsync<Cliente>($@"
                 SELECT C.*,T.*,E.* FROM Cliente C 
                 LEFT JOIN ClienteTelefone CT ON C.Id=CT.ClienteId
                 LEFT JOIN ClienteEndereco CE ON C.Id=CE.ClienteId
                 LEFT JOIN Telefone T ON CT.TelefoneId=T.Id
                 LEFT JOIN Endereco E ON E.ID=CE.EnderecoId
-                WHERE C.Id='{tt}'";
-                var clientes = await db.QueryAsync<Cliente>(query);
+                WHERE C.Id=@Id",new { Id = tt });
                 
                 return clientes;
             }
