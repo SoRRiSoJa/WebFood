@@ -22,6 +22,6 @@ namespace WebFood.Service.Abstractions
         /// </summary>
         /// <param name="Id"></param>
         /// <returns></returns>
-        Task<IEnumerable<Cliente>> GetById(Guid Id);
+        Task<IEnumerable<Cliente>> GetById(Guid? Id);
     }
 }

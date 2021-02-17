@@ -5,10 +5,9 @@ using System.Threading.Tasks;
 namespace WebFood.DAL
 {
     using Dapper;
-    using System.Data;
+    using Microsoft.AspNetCore.Mvc;
     using WebFood.DAL.Abstractions;
     using WebFood.Data;
-    using WebFood.DTO.Cliente;
     using WebFood.Model.Cliente;
     /// <summary>
     /// Implementação da classe de acesso a dados docliente
@@ -38,27 +37,34 @@ namespace WebFood.DAL
         /// </summary>
         /// <param name="id">Id do cliente</param>
         /// <returns></returns>
-        public async Task<IEnumerable<Cliente>> GetById(Guid id)
-        {
-            var tt = new Guid("77C1FD6D-7476-4F56-B969-20176E1D5934");
-            using (var db = _ContextDB.GetDbconnection())
-            {
 
-                await db.OpenAsync();
-                var clientes = await db.QueryAsync<Cliente>($@"
-                SELECT C.*,T.*,E.* FROM Cliente C 
-                LEFT JOIN ClienteTelefone CT ON C.Id=CT.ClienteId
-                LEFT JOIN ClienteEndereco CE ON C.Id=CE.ClienteId
-                LEFT JOIN Telefone T ON CT.TelefoneId=T.Id
-                LEFT JOIN Endereco E ON E.ID=CE.EnderecoId
-                WHERE C.Id=@Id",new { Id = tt });
-                
-                return clientes;
+        public async Task<IEnumerable<Cliente>> GetById(Guid? id)
+        {
+            try
+            {
+                using (var db = _ContextDB.GetDbconnection())
+                {
+
+                    await db.OpenAsync();
+                    var clientes = await db.QueryAsync<Cliente>($@"
+                        SELECT C.*,T.*,E.* FROM Cliente C 
+                        LEFT JOIN ClienteTelefone CT ON C.Id=CT.ClienteId
+                        LEFT JOIN ClienteEndereco CE ON C.Id=CE.ClienteId
+                        LEFT JOIN Telefone T ON CT.TelefoneId=T.Id
+                        LEFT JOIN Endereco E ON E.ID=CE.EnderecoId
+                        WHERE C.Id=@Id", new { Id = id });
+                    return clientes;
+                }
+            }
+            catch (Exception ex)
+            {
+                Console.WriteLine($"Ocorreu um erro ao recuperar registro:{ex.Message}");
+                return null;
             }
         }
-                
-            
-        
+
+
+
         /// <summary>
         /// Insere um novo registro de cliente
         /// </summary>
