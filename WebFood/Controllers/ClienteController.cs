@@ -1,17 +1,15 @@
 ﻿using Microsoft.AspNetCore.Mvc;
 using System;
-using System.Collections.Generic;
 
 namespace WebFood.Controllers
 {
     using System.Threading.Tasks;
-    using WebFood.Model.Cliente;
     using WebFood.Service.Abstractions;
 
     /// <summary>
     /// Api de operaçoes  CRUD para Entidade Cliente
     /// </summary>
-    
+
     [Route("api/cliente")]
     [ApiController]
     public class ClienteController : ControllerBase

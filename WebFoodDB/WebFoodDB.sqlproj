@@ -58,6 +58,7 @@
     <Folder Include="Properties" />
     <Folder Include="Tables" />
     <Folder Include="Tables\Cliente" />
+    <Folder Include="Tables\Auth" />
   </ItemGroup>
   <ItemGroup>
     <Build Include="WebFoodDB.sql" />
@@ -68,6 +69,7 @@
     <Build Include="Tables\Cliente\Cliente.sql" />
     <Build Include="Tables\Cliente\ClienteEndereco.sql" />
     <Build Include="Tables\Cliente\ClienteTelefone.sql" />
+    <Build Include="Tables\Auth\User.sql" />
   </ItemGroup>
   <ItemGroup>
     <None Include="WebFoodDB.publish.xml" />

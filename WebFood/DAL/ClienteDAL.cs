@@ -1,13 +1,12 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Threading.Tasks;
+using System.Linq;
+using System.Text;
 
 namespace WebFood.DAL
 {
     using Dapper;
-    using Microsoft.AspNetCore.Mvc;
-    using System.Linq;
-    using System.Text;
     using WebFood.DAL.Abstractions;
     using WebFood.Data;
     using WebFood.Model.Cliente;
@@ -79,6 +78,7 @@ namespace WebFood.DAL
                                           combinedCliente.Endereco = group.Select(cli => cli.Endereco.Single()).ToList();
                                           return combinedCliente;
                                       }).FirstOrDefault();
+                    await db.CloseAsync();
                     return minhaRolaNoSelect;
                 }
             }
