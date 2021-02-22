@@ -74,7 +74,7 @@ namespace WebFood.DAL.Auth
                 {
                     await db.OpenAsync();
                     var user = await db.QueryFirstOrDefaultAsync<User>($@"
-                        SELECT * FROM User  
+                        SELECT * FROM [dbo].[User]  
                         WHERE Username=@Username AND Password=@Password", new { Username = userName, Password=password });
                     await db.CloseAsync();
 

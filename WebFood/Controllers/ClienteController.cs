@@ -1,15 +1,19 @@
 ﻿using Microsoft.AspNetCore.Mvc;
 using System;
+using Microsoft.AspNetCore.Http;
+using System.Threading.Tasks;
 
 namespace WebFood.Controllers
 {
-    using System.Threading.Tasks;
+    using Microsoft.AspNetCore.Authorization;
+    using System.Collections.Generic;
+    using WebFood.Model.Cliente;
     using WebFood.Service.Abstractions;
 
     /// <summary>
     /// Api de operaçoes  CRUD para Entidade Cliente
     /// </summary>
-
+    [Authorize]
     [Route("api/cliente")]
     [ApiController]
     public class ClienteController : ControllerBase
@@ -23,14 +27,13 @@ namespace WebFood.Controllers
         {
             this.ClienteService = ClienteService ?? throw new ArgumentNullException(nameof(ClienteService));
         }
-        
-        
 
         /// <summary>
         /// Retorna uma lista com todos os clientes
         /// </summary>
         /// <returns>IEnumerable<Cliente></Cliente></returns>
-        [HttpGet]
+        [HttpGet("ListAll")]
+        [ProducesResponseType(typeof(IEnumerable<Cliente>), StatusCodes.Status200OK)]
         public async Task<IActionResult> ListAll()
         {
             return Ok(await ClienteService.ListAll());
@@ -43,6 +46,7 @@ namespace WebFood.Controllers
         /// <returns></returns>
 
         [HttpGet("GetById/{Id}")]
+        [ProducesResponseType(typeof(Cliente), StatusCodes.Status200OK)]
         public async Task<IActionResult> GetById(Guid? Id)
         {
             if (Id is null)
@@ -57,24 +61,6 @@ namespace WebFood.Controllers
                 return new StatusCodeResult(500);
             }
         }
-
-
-        //[HttpPost]
-        //public void Post([FromBody] string value)
-        //{
-        //}
-
-
-        //[HttpPut("{id}")]
-        //public void Put(Guid id, [FromBody] string value)
-        //{
-        //}
-
-
-
-        //[HttpDelete("{id}")]
-        //public void Delete(Guid id)
-        //{
-        //}
+                    
     }
 }

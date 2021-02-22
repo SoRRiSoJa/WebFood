@@ -4,6 +4,7 @@ using System;
 
 namespace WebFood.Controllers
 {
+    using Microsoft.AspNetCore.Authorization;
     using WebFood.Model.Auth;
     using WebFood.Service.Abstractions;
     using WebFood.Service.Auth;
@@ -31,6 +32,7 @@ namespace WebFood.Controllers
         /// <returns></returns>
         [HttpPost]
         [Route("login")]
+        [AllowAnonymous]
         public async Task<ActionResult<dynamic>> Authenticate([FromBody] User model)
         {
             // Recupera o usuário
