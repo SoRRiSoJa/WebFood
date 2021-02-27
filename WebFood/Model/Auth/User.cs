@@ -23,6 +23,14 @@ namespace WebFood.Model.Auth
         /// </summary>
         public string Password { get; set; }
         /// <summary>
+        /// Salt para o hash
+        /// </summary>
+        public string Salt { get; set; }
+        /// <summary>
+        /// Numero de iterações utilizadas
+        /// </summary>
+        public int Iteractions { get; set; }
+        /// <summary>
         /// nivel
         /// </summary>
         public string Role { get; set; }

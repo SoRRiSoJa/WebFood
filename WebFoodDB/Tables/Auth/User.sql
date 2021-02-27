@@ -2,6 +2,8 @@
 (
 	[IdUser] INT NOT NULL PRIMARY KEY IDENTITY,
 	[Username] VARCHAR(120) NOT NULL,
-	[Password] VARCHAR(MAX) NOT NULL,
+	[Password] VARCHAR(512) NOT NULL,
+	[Salt] VARCHAR(512) NOT NULL,
+	[Iteractions] INT NOT NULL,
 	[Role] VARCHAR(120) NOT NULL,
 )

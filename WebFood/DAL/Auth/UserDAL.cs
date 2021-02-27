@@ -58,7 +58,6 @@ namespace WebFood.DAL.Auth
                 Console.WriteLine($"Ocorreu um erro ao recuperar registro:{ex.Message}");
                 return null;
             }
-            throw new NotImplementedException();
         }
         /// <summary>
         /// Recupera um usuário por seu login e senha  
@@ -94,9 +93,23 @@ namespace WebFood.DAL.Auth
         /// </summary>
         /// <param name="o"></param>
         /// <returns></returns>
-        public Task<bool> Insert(User o)
+        public async Task<bool> Insert(User o)
         {
-            throw new NotImplementedException();
+            try
+            {
+                using (var db = _ContextDB.GetDbconnection())
+                {
+                    await db.OpenAsync();
+                    await db.ExecuteAsync(@"INSERT INTO [dbo].[User]([Username],[Password],[Salt],[Iteractions],[Role]) VALUES (@a,@b,@c,@d,@e)", new { a = o.Username, b = o.Password, c = o.Salt, d = o.Iteractions, e = o.Role });
+                    await db.CloseAsync();
+                    return true;
+                }
+            }
+            catch (Exception ex)
+            {
+                Console.WriteLine($"Ocorreu um erro ao recuperar registro:{ex.Message}");
+                return false;
+            }
         }
         /// <summary>
         /// Recupera todos os usuários do Banco

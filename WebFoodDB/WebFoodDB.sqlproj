@@ -59,6 +59,7 @@
     <Folder Include="Tables" />
     <Folder Include="Tables\Cliente" />
     <Folder Include="Tables\Auth" />
+    <Folder Include="Tables\Produto" />
   </ItemGroup>
   <ItemGroup>
     <Build Include="WebFoodDB.sql" />
@@ -70,6 +71,12 @@
     <Build Include="Tables\Cliente\ClienteEndereco.sql" />
     <Build Include="Tables\Cliente\ClienteTelefone.sql" />
     <Build Include="Tables\Auth\User.sql" />
+    <Build Include="Tables\Produto\Categoria.sql" />
+    <Build Include="Tables\Produto\Grupo.sql" />
+    <Build Include="Tables\Produto\SituacaoTributaria.sql" />
+    <Build Include="Tables\Produto\TipoProduto.sql" />
+    <Build Include="Tables\Produto\UnidadeDeMedida.sql" />
+    <Build Include="Tables\Produto\Aliquota.sql" />
   </ItemGroup>
   <ItemGroup>
     <None Include="WebFoodDB.publish.xml" />
